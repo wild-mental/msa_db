@@ -1,0 +1,18 @@
+FROM mysql:8.3.0
+
+# MySQL 기본 설정이 필요하다면 설정 파일을 준비해 컨테이너 내부 mysql conf 디렉토리에 복사
+# COPY my.cnf /etc/mysql/my.cnf
+
+# MySQL 초기 root 비밀번호 설정
+ENV MYSQL_ROOT_PASSWORD=12341234
+
+# 컨테이너 시작 시 실행할 init.sql 을 준비한 뒤, 도커 내부 디렉토리에 복사
+COPY msa_sample_dump.sql /docker-entrypoint-initdb.d/
+# ⇒ 프로젝트 DDL 을 mysqldump 로 추출한 뒤 해당 파일을 init.sql 로 만들어 적용해 봅니다!
+
+# 컨테이너가 처음 실행될 때 한 번만 실행됨
+RUN chmod 644 /docker-entrypoint-initdb.d/msa_sample_dump.sql
+
+# Container 내부와 데이터 교환이 쉽도록 로컬 디렉토리를 컨테이너 내부의 특정 경로에 마운트
+# VOLUME /Users/kidsnote/Workspace/docker_sandbox/mysql_data:/mnt/host_dir
+# 주의! - ':' 앞에 지정한 로컬 디렉토리가 만들어져 있어야 함
