@@ -20,55 +20,55 @@ USE msa_sample;
 
 -- users 테이블 생성
 CREATE TABLE users (
-    userId INT(8) PRIMARY KEY,
+    user_id INT(8) PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(20),
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 -- products 테이블 생성
 CREATE TABLE products (
-    productId INT(8) PRIMARY KEY,
+    product_id INT(8) PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description TEXT,
     price INT NOT NULL,
     stock INT DEFAULT 0,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 -- items 테이블 생성
 CREATE TABLE items (
-    itemId INT(8) PRIMARY KEY,
-    productId INT(8),
+    item_id INT(8) PRIMARY KEY,
+    product_id INT(8),
     quantity INT NOT NULL,
-    FOREIGN KEY (productId) REFERENCES products(productId) ON DELETE CASCADE
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
 -- orders 테이블 생성
 CREATE TABLE orders (
-    orderId INT(8) PRIMARY KEY,
-    userId INT(8),
-    itemId INT(8),
-    totalPrice INT NOT NULL,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (itemId) REFERENCES items(itemId) ON DELETE CASCADE,
-    FOREIGN KEY (userId) REFERENCES users(userId) ON DELETE CASCADE
+    order_id INT(8) PRIMARY KEY,
+    user_id INT(8),
+    item_id INT(8),
+    total_price INT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (item_id) REFERENCES items(item_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 -- reviews 테이블 생성
 CREATE TABLE reviews (
-    reviewId INT(8) PRIMARY KEY,
-    userId INT(8),
-    productId INT(8),
+    review_id INT(8) PRIMARY KEY,
+    user_id INT(8),
+    product_id INT(8),
     rating INT CHECK (rating BETWEEN 1 AND 5),
     comment TEXT,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (userId) REFERENCES users(userId) ON DELETE CASCADE,
-    FOREIGN KEY (productId) REFERENCES products(productId) ON DELETE CASCADE
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
 
 -- 더미데이터 입력
 
 -- users 테이블 더미 데이터
-INSERT INTO users (userId, name, email, phone) VALUES
+INSERT INTO users (user_id, name, email, phone) VALUES
 (1, 'Alice', 'alice@example.com', '123-456-7890'),
 (2, 'Bob', 'bob@example.com', '123-456-7891'),
 (3, 'Charlie', 'charlie@example.com', '123-456-7892'),
@@ -91,7 +91,7 @@ INSERT INTO users (userId, name, email, phone) VALUES
 (20, 'Tina', 'tina@example.com', '223-456-7899');
 
 -- products 테이블 더미 데이터
-INSERT INTO products (productId, name, description, price, stock) VALUES
+INSERT INTO products (product_id, name, description, price, stock) VALUES
 (1, 'Product A', 'Description for product A', 1000, 50),
 (2, 'Product B', 'Description for product B', 2000, 30),
 (3, 'Product C', 'Description for product C', 1500, 60),
@@ -114,7 +114,7 @@ INSERT INTO products (productId, name, description, price, stock) VALUES
 (20, 'Product T', 'Description for product T', 2600, 30);
 
 -- items 테이블 더미 데이터
-INSERT INTO items (itemId, productId, quantity) VALUES
+INSERT INTO items (item_id, product_id, quantity) VALUES
 (1, 1, 2),
 (2, 2, 1),
 (3, 3, 3),
@@ -137,7 +137,7 @@ INSERT INTO items (itemId, productId, quantity) VALUES
 (20, 20, 4);
 
 -- orders 테이블 더미 데이터
-INSERT INTO orders (orderId, userId, itemId, totalPrice) VALUES
+INSERT INTO orders (order_id, user_id, item_id, total_price) VALUES
 (1, 1, 1, 2000),
 (2, 2, 2, 2000),
 (3, 3, 3, 4500),
@@ -160,7 +160,7 @@ INSERT INTO orders (orderId, userId, itemId, totalPrice) VALUES
 (20, 20, 20, 10400);
 
 -- reviews 테이블 더미 데이터
-INSERT INTO reviews (reviewId, userId, productId, rating, comment) VALUES
+INSERT INTO reviews (review_id, user_id, product_id, rating, comment) VALUES
 (1, 1, 1, 5, 'Great product!'),
 (2, 2, 2, 4, 'Good value.'),
 (3, 3, 3, 3, 'Average quality.'),
