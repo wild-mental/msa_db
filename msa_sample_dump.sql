@@ -20,7 +20,7 @@ USE msa_sample;
 
 -- users 테이블 생성
 CREATE TABLE users (
-    user_id INT(8) PRIMARY KEY,
+    user_id INT(8) PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(20),
@@ -28,7 +28,7 @@ CREATE TABLE users (
 );
 -- products 테이블 생성
 CREATE TABLE products (
-    product_id INT(8) PRIMARY KEY,
+    product_id INT(8) PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     description TEXT,
     price INT NOT NULL,
@@ -38,14 +38,14 @@ CREATE TABLE products (
 );
 -- items 테이블 생성
 CREATE TABLE items (
-    item_id INT(8) PRIMARY KEY,
+    item_id INT(8) PRIMARY KEY AUTO_INCREMENT,
     product_id INT(8),
     quantity INT NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
 -- orders 테이블 생성
 CREATE TABLE orders (
-    order_id INT(8) PRIMARY KEY,
+    order_id INT(8) PRIMARY KEY AUTO_INCREMENT,
     user_id INT(8),
     item_id INT(8),
     total_price INT NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE orders (
 );
 -- reviews 테이블 생성
 CREATE TABLE reviews (
-    review_id INT(8) PRIMARY KEY,
+    review_id INT(8) PRIMARY KEY AUTO_INCREMENT,
     user_id INT(8),
     product_id INT(8),
     rating INT CHECK (rating BETWEEN 1 AND 5),
